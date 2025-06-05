@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Affordable OTT subscriptions for Netflix, Prime Video, JioHotstar, and more at MTB OTT.">
+  <meta name="keywords" content="OTT subscriptions, Netflix, Prime Video, JioHotstar, affordable streaming">
+  <title>MTB OTT Subscriptions</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&family=Montserrat:wght@500&display=swap" rel="stylesheet">
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    body {
+      font-family: 'Poppins', sans-serif;
+      background-color: #f4f4f4;
+      color: #333;
+      transition: background-color 0.3s, color 0.3s;
+      line-height: 1.5;
+    }
+    .dark-mode {
+      background-color: #121212;
+      color: #f4f4f4;
+    }
+    header {
+      background-color: #222;
+      color: white;
+      padding: 15px;
+      text-align: center;
+      font-size: 20px;
+      font-weight: 600;
+    }
+    .container {
+      padding: 15px;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    .ott-card {
+      perspective: 1000px;
+      margin: 15px 0;
+      height: 280px;
+      max-width: 350px;
+      width: 100%;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    .card-inner {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      transition: transform 0.6s;
+      transform-style: preserve-3d;
+      border-radius: 12px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+      background: white;
+    }
+    .dark-mode .card-inner {
+      background: #1f1f1f;
+    }
+    .ott-card.tapped .card-inner {
+      transform: rotateY(180deg);
+    }
+    .card-front, .card-back {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      backface-visibility: hidden;
+      border-radius: 12px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 15px;
+      overflow: hidden;
+    }
+    .card-back {
+      transform: rotateY(180deg);
+      background: #f0f0f0;
+    }
+    .dark-mode .card-back {
+      background: #2a2a2a;
+    }
+    .ott-logo {
+      max-width: 100px;
+      height: auto;
+      margin-bottom: 8px;
+    }
+    .hand-icon {
+      width: 20px;
+      margin-top: 8px;
+      cursor: pointer;
+    }
+    .qr-code {
+      max-width: 120px;
+      height: auto;
+      margin: 8px 0;
+    }
+    h2 {
+      font-size: 18px;
+    font-weight: 600;
+      margin: 5px 0;
+      word-wrap: break-word;
+      max-width: 100%;
+    }
+    p {
+      font-size: 14px;
+      margin: 3px 0;
+    }
+    .pay-btn {
+      background-color: #28a745;
+      color: white;
+      padding: 8px 16px;
+      border: none;
+      border-radius: 5px;
+      text-decoration: none;
+      font-size: 14px;
+      margin-top: 8px;
+      transition: background-color 0.3s;
+    }
+    .pay-btn:hover {
+      background-color: #218838;
+    }
+    .note {
+      font-size: 11px;
+      margin-top: 5px;
+      color: #888;
+      max-width: 90%;
+      word-wrap: break-word;
+    }
+    .dark-mode .note {
+      color: #ccc;
+    }
+    .whatsapp-btn {
+      display: block;
+      width: fit-content;
+      margin: 10px auto;
+      background-color: #e63946;
+      color: white;
+      padding: 8px 16px;
+      border-radius: 25px;
+      text-decoration: none;
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 500;
+      font-size: 13px;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    .whatsapp-btn:hover {
+      transform: scale(1.05);
+      box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+    }
+    .dark-mode .whatsapp-btn:hover {
+      box-shadow: 0 2px 5px rgba(255,255,255,0.2);
+    }
+    .dark-toggle {
+      position: absolute;
+      top: 15px;
+      right: 15px;
+      cursor: pointer;
+      width: 24px;
+    }
+    footer {
+      text-align: center;
+      padding: 10px;
+      background: #222;
+      color: white;
+      font-size: 12px;
+    }
+    @media (min-width: 768px) {
+      .container {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+        gap: 15px;
+      }
+      .ott-card {
+        margin: 10px;
+      }
+      header {
+        font-size: 24px;
+      }
+      h2 {
+        font-size: 20px;
+      }
+      p, .pay-btn, .whatsapp-btn {
+        font-size: 14px;
+      }
+      .note {
+        font-size: 12px;
+      }
+    }
+    @media (max-width: 480px) {
+      .ott-card {
+        height: 260px;
+      }
+      .ott-logo {
+        max-width: 80px;
+      }
+      .qr-code {
+        max-width: 100px;
+      }
+      h2 {
+        font-size: 16px;
+      }
+      p, .pay-btn {
+        font-size: 13px;
+      }
+      .note {
+        font-size: 10px;
+      }
+      .whatsapp-btn {
+        font-size: 12px;
+        padding: 6px 12px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    MTB OTT - Affordable Subscriptions
+    <img id="toggle-icon" src="https://img.icons8.com/ios-filled/50/moon-symbol.png" class="dark-toggle" width="24" onclick="toggleDarkMode()" title="Toggle Dark Mode" aria-label="Toggle Dark Mode" role="button" />
+  </header>
+  <div class="container">
+    <!-- Netflix -->
+    <div class="ott-card">
+      <div class="card-inner">
+        <div class="card-front">
+          <img src="https://upload.wikimedia.org/wikipedia/commons/0/08/Netflix_2015_logo.svg" class="ott-logo" alt="Netflix Logo" loading="lazy" />
+          <h2>Netflix 4K</h2>
+          <p>Validity: 1 Year</p>
+          <p>Price: ₹499</p>
+          <a class="pay-btn" href="upi://pay?pa=gpay-11228156095@okbizaxis&pn=MTB%20OTT&cu=INR&am=499">Pay Now</a>
+          <div class="note">After payment, send screenshot on WhatsApp.</div>
+          <img src="https://img.icons8.com/ios-filled/50/hand-right.png" class="hand-icon" alt="Tap to view QR Code" />
+        </div>
+        <div class="card-back">
+          <img src="https://api.qrserver.com/v1/create-qr-code/?size=120x120&data=upi%3A%2F%2Fpay%3Fpa%3Dgpay-11228156095%40okbizaxis%26pn%3DMTB%20OTT%26cu%3DINR%26am%3D499" class="qr-code" alt="Netflix UPI QR Code" loading="lazy" />
+          <p>Scan to Pay ₹499</p>
+        </div>
+      </div>
+    </div>
+    <!-- Prime Video -->
+    <div class="ott-card">
+      <div class="card-inner">
+        <div class="card-front">
+          <img src="https://upload.wikimedia.org/wikipedia/commons/f/f1/Prime_Video.png" class="ott-logo" alt="Prime Video Logo" loading="lazy" />
+          <h2>Prime Video</h2>
+          <p>Validity: 6 Months</p>
+          <p>Price: ₹199</p>
+          <a class="pay-btn" href="upi://pay?pa=gpay-11228156095@okbizaxis&pn=MTB%20OTT&cu=INR&am=199">Pay Now</a>
+          <div class="note">After payment, send screenshot on WhatsApp.</div>
+          <img src="https://img.icons8.com/ios-filled/50/hand-right.png" class="hand-icon" alt="Tap to view QR Code" />
+        </div>
+        <div class="card-back">
+          <img src="https://api.qrserver.com/v1/create-qr-code/?size=120x120&data=upi%3A%2F%2Fpay%3Fpa%3Dgpay-11228156095%40okbizaxis%26pn%3DMTB%20OTT%26cu%3DINR%26am%3D199" class="qr-code" alt="Prime Video UPI QR Code" loading="lazy" />
+          <p>Scan to Pay ₹199</p>
+        </div>
+      </div>
+    </div>
+    <!-- JioHotstar -->
+    <div class="ott-card">
+      <div class="card-inner">
+        <div class="card-front">
+          <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSN6oMyTk1I9MQHw637eQLkFeBzP7XwAz-h8zwC2QMmh37sugi0ws5r4iU&s=10" class="ott-logo" alt="Disney+ Hotstar Logo" loading="lazy" />
+          <h2>JioHotstar</h2>
+          <p>Validity: 1 Year</p>
+          <p>Price: ₹349</p>
+          <a class="pay-btn" href="upi://pay?pa=gpay-11228156095@okbizaxis&pn=MTB%20OTT&cu=INR&am=349">Pay Now</a>
+          <div class="note">After payment, send screenshot on WhatsApp.</div>
+          <img src="https://img.icons8.com/ios-filled/50/hand-right.png" class="hand-icon" alt="Tap to view QR Code" />
+        </div>
+        <div class="card-back">
+          <img src="https://api.qrserver.com/v1/create-qr-code/?size=120x120&data=upi%3A%2F%2Fpay%3Fpa%3Dgpay-11228156095%40okbizaxis%26pn%3DMTB%20OTT%26cu%3DINR%26am%3D349" class="qr-code" alt="JioHotstar UPI QR Code" loading="lazy" />
+          <p>Scan to Pay ₹349</p>
+        </div>
+      </div>
+    </div>
+    <!-- Zee5 -->
+    <div class="ott-card">
+      <div class="card-inner">
+        <div class="card-front">
+          <img src="https://1000logos.net/wp-content/uploads/2022/01/Zee5-Logo.png" class="ott-logo" alt="Zee5 Logo" loading="lazy" />
+          <h2>Zee5</h2>
+          <p>Validity: 1 Year</p>
+          <p>Price: ₹299</p>
+          <a class="pay-btn" href="upi://pay?pa=gpay-11228156095@okbizaxis&pn=MTB%20OTT&cu=INR&am=299">Pay Now</a>
+          <div class="note">After payment, send screenshot on WhatsApp.</div>
+          <img src="https://img.icons8.com/ios-filled/50/hand-right.png" class="hand-icon" alt="Tap to view QR Code" />
+        </div>
+        <div class="card-back">
+          <img src="https://api.qrserver.com/v1/create-qr-code/?size=120x120&data=upi%3A%2F%2Fpay%3Fpa%3Dgpay-11228156095%40okbizaxis%26pn%3DMTB%20OTT%26cu%3DINR%26am%3D299" class="qr-code" alt="Zee5 UPI QR Code" loading="lazy" />
+          <p>Scan to Pay ₹299</p>
+        </div>
+      </div>
+    </div>
+    <!-- SonyLIV -->
+    <div class="ott-card">
+      <div class="card-inner">
+        <div class="card-front">
+          <img src="https://x.imastudent.com/content/0059513_sonyliv_500.png" class="ott-logo" alt="SonyLIV Logo" loading="lazy" />
+          <h2>SonyLIV</h2>
+          <p>Validity: 1 Year</p>
+          <p>Price: ₹299</p>
+          <a class="pay-btn" href="upi://pay?pa=gpay-11228156095@okbizaxis&pn=MTB%20OTT&cu=INR&am=299">Pay Now</a>
+          <div class="note">After payment, send screenshot on WhatsApp.</div>
+          <img src="https://img.icons8.com/ios-filled/50/hand-right.png" class="hand-icon" alt="Tap to view QR Code" />
+        </div>
+        <div class="card-back">
+          <img src="https://api.qrserver.com/v1/create-qr-code/?size=120x120&data=upi%3A%2F%2Fpay%3Fpa%3Dgpay-11228156095%40okbizaxis%26pn%3DMTB%20OTT%26cu%3DINR%26am%3D299" class="qr-code" alt="SonyLIV UPI QR Code" loading="lazy" />
+          <p>Scan to Pay ₹299</p>
+        </div>
+      </div>
+    </div>
+    <!-- Hoichoi -->
+    <div class="ott-card">
+      <div class="card-inner">
+        <div class="card-front">
+          <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/b0/Hoichoi-720p-transperant.png/1200px-Hoichoi-720p-transperant.png" class="ott-logo" alt="Hoichoi Logo" loading="lazy" />
+          <h2>Hoichoi</h2>
+          <p>Validity: 1 Year</p>
+          <p>Price: ₹299</p>
+          <a class="pay-btn" href="upi://pay?pa=gpay-11228156095@okbizaxis&pn=MTB%20OTT&cu=INR&am=299">Pay Now</a>
+          <div class="note">After payment, send screenshot on WhatsApp.</div>
+          <img src="https://img.icons8.com/ios-filled/50/hand-right.png" class="hand-icon" alt="Tap to view QR Code" />
+        </div>
+        <div class="card-back">
+          <img src="https://api.qrserver.com/v1/create-qr-code/?size=120x120&data=upi%3A%2F%2Fpay%3Fpa%3Dgpay-11228156095%40okbizaxis%26pn%3DMTB%20OTT%26cu%3DINR%26am%3D299" class="qr-code" alt="Hoichoi UPI QR Code" loading="lazy" />
+          <p>Scan to Pay ₹299</p>
+        </div>
+      </div>
+    </div>
+    <!-- Discovery+ -->
+    <div class="ott-card">
+      <div class="card-inner">
+        <div class="card-front">
+          <img src="https://upload.wikimedia.org/wikipedia/commons/d/df/Discovery%2B.png" class="ott-logo" alt="Discovery+ Logo" loading="lazy" />
+          <h2>Discovery+</h2>
+          <p>Validity: 1 Year</p>
+          <p>Price: ₹299</p>
+          <a class="pay-btn" href="upi://pay?pa=gpay-11228156095@okbizaxis&pn=MTB%20OTT&cu=INR&am=299">Pay Now</a>
+          <div class="note">After payment, send screenshot on WhatsApp.</div>
+          <img src="https://img.icons8.com/ios-filled/50/hand-right.png" class="hand-icon" alt="Tap to view QR Code" />
+        </div>
+        <div class="card-back">
+          <img src="https://api.qrserver.com/v1/create-qr-code/?size=120x120&data=upi%3A%2F%2Fpay%3Fpa%3Dgpay-11228156095%40okbizaxis%26pn%3DMTB%20OTT%26cu%3DINR%26am%3D299" class="qr-code" alt="Discovery+ UPI QR Code" loading="lazy" />
+          <p>Scan to Pay ₹299</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <footer>
+    <a class="whatsapp-btn" href="https://api.whatsapp.com/send?phone=919091544508" target="_blank">Chat on WhatsApp (9091544508)</a>
+  </footer>
+  <script>
+    function toggleDarkMode() {
+      document.body.classList.toggle("dark-mode");
+      const toggleIcon = document.getElementById("toggle-icon");
+      toggleIcon.src = document.body.classList.contains("dark-mode")
+        ? "https://img.icons8.com/ios-filled/50/sun.png"
+        : "https://img.icons8.com/ios-filled/50/moon-symbol.png";
+      toggleIcon.title = document.body.classList.contains("dark-mode")
+        ? "Switch to Light Mode"
+        : "Switch to Dark Mode";
+      toggleIcon.setAttribute("aria-label", toggleIcon.title);
+    }
+
+    // Toggle flip on click/tap for mobile
+    document.querySelectorAll('.ott-card').forEach(card => {
+      card.addEventListener('click', () => {
+        card.classList.toggle('tapped');
+      });
+    });
+  </script>
+</body>
+</html>
