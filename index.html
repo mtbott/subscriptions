@@ -205,6 +205,84 @@
     .dark-mode .dark-toggle:hover {
       background-color: rgba(255,255,255,0.2);
     }
+    .discount-toggle {
+      position: absolute;
+      top: 15px;
+      left: 15px;
+      cursor: pointer;
+      width: 28px;
+      height: 28px;
+      padding: 4px;
+      border-radius: 50%;
+      transition: background-color 0.3s, transform 0.3s;
+    }
+    .discount-toggle:hover {
+      background-color: rgba(255,255,255,0.1);
+      transform: scale(1.1);
+    }
+    .dark-mode .discount-toggle:hover {
+      background-color: rgba(255,255,255,0.2);
+    }
+    .discount-sidebar {
+      position: fixed;
+      top: 0;
+      left: -250px;
+      width: 250px;
+      height: 100%;
+      background: white;
+      padding: 20px;
+      transition: left 0.3s ease;
+      z-index: 20;
+      box-shadow: 2px 0 5px rgba(0,0,0,0.2);
+    }
+    .discount-sidebar.open {
+      left: 0;
+    }
+    .dark-mode .discount-sidebar {
+      background: #1f1f1f;
+      color: #f4f4f4;
+    }
+    .discount-sidebar h3 {
+      font-size: 18px;
+      margin-bottom: 10px;
+    }
+    .discount-sidebar ul {
+      list-style: disc;
+      padding-left: 20px;
+      margin-bottom: 20px;
+    }
+    .discount-sidebar li {
+      font-size: 14px;
+      margin-bottom: 8px;
+    }
+    .discount-input {
+      display: flex;
+      gap: 5px;
+      margin-bottom: 20px;
+    }
+    #discount-code {
+      padding: 5px;
+      border-radius: 5px;
+      border: 1px solid #ccc;
+      font-size: 12px;
+      flex: 1;
+    }
+    .discount-input button, .discount-sidebar > button {
+      background: #28a745;
+      color: white;
+      border: none;
+      padding: 5px 10px;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    .discount-input button:hover, .discount-sidebar > button:hover {
+      background: #218838;
+    }
+    .dark-mode #discount-code {
+      background: #333;
+      color: #f4f4f4;
+      border-color: #555;
+    }
     footer {
       text-align: center;
       padding: 10px;
@@ -261,17 +339,41 @@
         padding: 5px 10px;
         font-size: 12px;
       }
+      .discount-sidebar {
+        width: 200px;
+        left: -200px;
+      }
+      .discount-sidebar h3 {
+        font-size: 16px;
+      }
+      .discount-sidebar li, #discount-code {
+        font-size: 12px;
+      }
     }
   </style>
 </head>
 <body>
   <header>
+    <img id="discount-icon" src="https://img.icons8.com/ios-filled/50/discount.png" class="discount-toggle" width="28" onclick="toggleDiscountSidebar()" title="View Discounts" aria-label="View Discounts" role="button" />
+    <div id="discount-sidebar" class="discount-sidebar">
+      <h3><span style="color: green;">Special Offers</span></h3>
+      <ul style="color: blue;">
+  <li><strong>WELCOME5: 5% off all plans</strong></li>
+  <li><strong>MYYEAR: ₹20 off yearly plans</strong></li>
+  <li><strong>BUNDLE: ₹100 off All-in-One Combo</strong></li>
+</ul>
+      <div class="discount-input">
+        <input type="text" id="discount-code" placeholder="Enter Discount Code" />
+        <button onclick="applyDiscount()">Apply</button>
+      </div>
+      <button onclick="toggleDiscountSidebar()">Close</button>
+    </div>
     MTB OTT - Affordable Subscriptions
     <img id="toggle-icon" src="https://img.icons8.com/ios-filled/50/moon-symbol.png" class="dark-toggle" width="28" onclick="toggleDarkMode()" title="Toggle Dark Mode" aria-label="Toggle Dark Mode" role="button" />
   </header>
   <div class="container">
     <!-- Netflix -->
-    <div class="ott-card" data-plans='{"3m":165,"6m":299,"1y":499}'>
+    <div class="ott-card" data-plans='{"3m":165,"6m":299,"1y":499}' tabindex="0">
       <div class="card-inner">
         <div class="card-front">
           <img src="https://upload.wikimedia.org/wikipedia/commons/0/08/Netflix_2015_logo.svg" class="ott-logo" alt="Netflix Logo" loading="lazy" />
@@ -294,7 +396,7 @@
       </div>
     </div>
     <!-- Prime Video -->
-    <div class="ott-card" data-plans='{"3m":110,"6m":199,"1y":349}'>
+    <div class="ott-card" data-plans='{"3m":110,"6m":199,"1y":349}' tabindex="0">
       <div class="card-inner">
         <div class="card-front">
           <img src="https://upload.wikimedia.org/wikipedia/commons/f/f1/Prime_Video.png" class="ott-logo" alt="Prime Video Logo" loading="lazy" />
@@ -317,7 +419,7 @@
       </div>
     </div>
     <!-- JioHotstar -->
-    <div class="ott-card" data-plans='{"3m":100,"6m":185,"1y":349}'>
+    <div class="ott-card" data-plans='{"3m":100,"6m":185,"1y":349}' tabindex="0">
       <div class="card-inner">
         <div class="card-front">
           <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSN6oMyTk1I9MQHw637eQLkFeBzP7XwAz-h8zwC2QMmh37sugi0ws5r4iU&s=10" class="ott-logo" alt="Disney+ Hotstar Logo" loading="lazy" />
@@ -340,7 +442,7 @@
       </div>
     </div>
     <!-- Zee5 -->
-    <div class="ott-card" data-plans='{"3m":99,"6m":175,"1y":299}'>
+    <div class="ott-card" data-plans='{"3m":99,"6m":175,"1y":299}' tabindex="0">
       <div class="card-inner">
         <div class="card-front">
           <img src="https://1000logos.net/wp-content/uploads/2022/01/Zee5-Logo.png" class="ott-logo" alt="Zee5 Logo" loading="lazy" />
@@ -363,7 +465,7 @@
       </div>
     </div>
     <!-- SonyLIV -->
-    <div class="ott-card" data-plans='{"3m":99,"6m":175,"1y":299}'>
+    <div class="ott-card" data-plans='{"3m":99,"6m":175,"1y":299}' tabindex="0">
       <div class="card-inner">
         <div class="card-front">
           <img src="https://x.imastudent.com/content/0059513_sonyliv_500.png" class="ott-logo" alt="SonyLIV Logo" loading="lazy" />
@@ -386,7 +488,7 @@
       </div>
     </div>
     <!-- Hoichoi -->
-    <div class="ott-card" data-plans='{"3m":99,"6m":175,"1y":299}'>
+    <div class="ott-card" data-plans='{"3m":99,"6m":175,"1y":299}' tabindex="0">
       <div class="card-inner">
         <div class="card-front">
           <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/b0/Hoichoi-720p-transperant.png/1200px-Hoichoi-720p-transperant.png" class="ott-logo" alt="Hoichoi Logo" loading="lazy" />
@@ -409,7 +511,7 @@
       </div>
     </div>
     <!-- Discovery+ -->
-    <div class="ott-card" data-plans='{"3m":99,"6m":175,"1y":299}'>
+    <div class="ott-card" data-plans='{"3m":99,"6m":175,"1y":299}' tabindex="0">
       <div class="card-inner">
         <div class="card-front">
           <img src="https://upload.wikimedia.org/wikipedia/commons/d/df/Discovery%2B.png" class="ott-logo" alt="Discovery+ Logo" loading="lazy" />
@@ -432,44 +534,109 @@
       </div>
     </div>
     <!-- All-in-One Combo -->
-<div class="ott-card" data-plans='{"1y":1499}' tabindex="0">
-  <div class="card-inner">
-    <div class="card-front">
-      <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQvEzPoB4PlOXttikYJNJkrgGrpqIudsR6ikuu3VmUscXyY7TZ62yoa1Ufu&s=10" class="ott-logo" alt="All-in-One Combo Logo" loading="lazy" />
-      <h2>Bundled - Get All</h2>
-      <p class="plan-validity">Validity: 1 Year</p>
-      <p class="plan-price">Price: ₹1499 (Offer)</p>
-      <a class="pay-btn" href="upi://pay?pa=gpay-11228156095@okbizaxis&pn=MTB%20OTT&cu=INR&am=1499">Pay Now</a>
-      <div class="note">After payment, send screenshot on WhatsApp.</div>
-      <img src="https://img.icons8.com/ios-filled/50/hand-right.png" class="hand-icon" alt="Tap to view QR Code" />
+    <div class="ott-card" data-plans='{"1y":1499}' tabindex="0">
+      <div class="card-inner">
+        <div class="card-front">
+          <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQvEzPoB4PlOXttikYJNJkrgGrpqIudsR6ikuu3VmUscXyY7TZ62yoa1Ufu&s=10" class="ott-logo" alt="All-in-One Combo Logo" loading="lazy" />
+          <h2>Bundled - Get All</h2>
+          <p class="plan-validity">Validity: 1 Year</p>
+          <p class="plan-price">Price: ₹1499</p>
+          <a class="pay-btn" href="upi://pay?pa=gpay-11228156095@okbizaxis&pn=MTB%20OTT&cu=INR&am=1499">Pay Now</a>
+          <div class="note">After payment, send screenshot on WhatsApp.</div>
+          <img src="https://img.icons8.com/ios-filled/50/hand-right.png" class="hand-icon" alt="Tap to view QR Code" />
+        </div>
+        <div class="card-back">
+          <img class="qr-code" src="https://api.qrserver.com/v1/create-qr-code/?size=120x120&data=upi%3A%2F%2Fpay%3Fpa%3Dgpay-11228156095%40okbizaxis%26pn%3DMTB%20OTT%26cu%3DINR%26am%3D1499" alt="All-in-One Combo UPI QR Code" loading="lazy" />
+          <p class="qr-text">Scan to Pay ₹1499</p>
+        </div>
+      </div>
     </div>
-    <div class="card-back">
-      <img class="qr-code" src="https://api.qrserver.com/v1/create-qr-code/?size=120x120&data=upi%3A%2F%2Fpay%3Fpa%3Dgpay-11228156095%40okbizaxis%26pn%3DMTB%20OTT%26cu%3DINR%26am%3D1499" alt="All-in-One Combo UPI QR Code" loading="lazy" />
-      <p class="qr-text">Scan to Pay ₹1499</p>
-    </div>
-  </div>
-</div>
   </div>
   <footer>
     <a class="whatsapp-btn" href="https://api.whatsapp.com/send?phone=919091544508" target="_blank">Chat on WhatsApp (9091544508)</a>
   </footer>
   <script>
     function toggleDarkMode() {
-      document.body.classList.toggle("dark-mode");
-      const toggleIcon = document.getElementById("toggle-icon");
-      toggleIcon.src = document.body.classList.contains("dark-mode")
-        ? "https://img.icons8.com/ios-filled/50/sun.png"
-        : "https://img.icons8.com/ios-filled/50/moon-symbol.png";
-      toggleIcon.title = document.body.classList.contains("dark-mode")
-        ? "Switch to Light Mode"
-        : "Switch to Dark Mode";
-      toggleIcon.setAttribute("aria-label", toggleIcon.title);
+      document.body.classList.toggle('dark-mode');
+      const toggleIcon = document.getElementById('toggle-icon');
+      toggleIcon.src = document.body.classList.contains('dark-mode')
+        ? 'https://img.icons8.com/ios-filled/50/sun.png'
+        : 'https://img.icons8.com/ios-filled/50/moon-symbol.png';
+      toggleIcon.title = document.body.classList.contains('dark-mode')
+        ? 'Switch to Light Mode'
+        : 'Switch to Dark Mode';
+      toggleIcon.setAttribute('aria-label', toggleIcon.title);
+      localStorage.setItem('darkMode', document.body.classList.contains('dark-mode'));
     }
 
-    // Toggle flip on click/tap for mobile
+    function toggleDiscountSidebar() {
+      const sidebar = document.getElementById('discount-sidebar');
+      sidebar.classList.toggle('open');
+    }
+
+    function applyDiscount() {
+      const code = document.getElementById('discount-code').value.toUpperCase();
+      let discountType = null;
+      let discountValue = 0;
+      if (code === 'WELCOME5') {
+        discountType = 'percentage';
+        discountValue = 0.05; // 5% off
+        alert('Discount applied! 5% off all plans.');
+      } else if (code === 'MYYEAR') {
+        discountType = 'flat-yearly';
+        discountValue = 20; // ₹20 off yearly plans
+        alert('Discount applied! ₹20 off yearly plans.');
+      } else if (code === 'BUNDLE') {
+        discountType = 'flat-combo';
+        discountValue = 100; // ₹100 off combo
+        alert('Discount applied! ₹100 off All-in-One Combo.');
+      } else {
+        localStorage.removeItem('discount');
+        alert(code ? 'Invalid code' : 'No code entered');
+        discountType = 'none';
+      }
+
+      if (discountType !== 'none') {
+        localStorage.setItem('discount', JSON.stringify({ code, type: discountType, value: discountValue }));
+      }
+
+      document.querySelectorAll('.ott-card').forEach(card => {
+        const plans = JSON.parse(card.getAttribute('data-plans'));
+        const activeTab = card.querySelector('.plan-tab.active');
+        const plan = activeTab ? activeTab.getAttribute('data-plan') : '1y';
+        const isCombo = card.querySelector('h2').textContent.includes('Bundled');
+        let planPrice = plans[plan];
+        if (discountType === 'percentage') {
+          planPrice = Math.round(planPrice * (1 - discountValue));
+        } else if (discountType === 'flat-yearly' && plan === '1y') {
+          planPrice = Math.max(0, planPrice - discountValue);
+        } else if (discountType === 'flat-combo' && isCombo && plan === '1y') {
+          planPrice = Math.max(0, planPrice - discountValue);
+        }
+        const planName = plan === '3m' ? '3 Months' : plan === '6m' ? '6 Months' : '1 Year';
+        const validity = card.querySelector('.plan-validity');
+        const price = card.querySelector('.plan-price');
+        const payBtn = card.querySelector('.pay-btn');
+        const qrCode = card.querySelector('.qr-code');
+        const qrText = card.querySelector('.qr-text');
+        validity.textContent = `Validity: ${planName}`;
+        price.textContent = `Price: ₹${planPrice}`;
+        payBtn.setAttribute('href', `upi://pay?pa=gpay-11228156095@okbizaxis&pn=MTB%20OTT&cu=INR&am=${planPrice}`);
+        qrCode.setAttribute('src', `https://api.qrserver.com/v1/create-qr-code/?size=120x120&data=upi%3A%2F%2Fpay%3Fpa%3Dgpay-11228156095%40okbizaxis%26pn%3DMTB%20OTT%26cu%3DINR%26am%3D${planPrice}`);
+        qrText.textContent = `Scan to Pay ₹${planPrice}`;
+      });
+    }
+
+    // Toggle flip on click/tap and keyboard
     document.querySelectorAll('.ott-card').forEach(card => {
       card.addEventListener('click', (e) => {
         if (!e.target.classList.contains('plan-tab')) {
+          card.classList.toggle('tapped');
+        }
+      });
+      card.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
           card.classList.toggle('tapped');
         }
       });
@@ -484,20 +651,26 @@
       const payBtn = card.querySelector('.pay-btn');
       const qrCode = card.querySelector('.qr-code');
       const qrText = card.querySelector('.qr-text');
+      const isCombo = card.querySelector('h2').textContent.includes('Bundled');
       tabs.forEach(tab => {
         tab.addEventListener('click', () => {
-          // Update active tab
           tabs.forEach(t => {
             t.classList.remove('active');
             t.setAttribute('aria-selected', 'false');
           });
           tab.classList.add('active');
           tab.setAttribute('aria-selected', 'true');
-
-          // Update card content
           const plan = tab.getAttribute('data-plan');
           const planName = plan === '3m' ? '3 Months' : plan === '6m' ? '6 Months' : '1 Year';
-          const planPrice = plans[plan];
+          let planPrice = plans[plan];
+          const discount = JSON.parse(localStorage.getItem('discount') || '{}');
+          if (discount.type === 'percentage') {
+            planPrice = Math.round(planPrice * (1 - discount.value));
+          } else if (discount.type === 'flat-yearly' && plan === '1y') {
+            planPrice = Math.max(0, planPrice - discount.value);
+          } else if (discount.type === 'flat-combo' && isCombo && plan === '1y') {
+            planPrice = Math.max(0, planPrice - discount.value);
+          }
           validity.textContent = `Validity: ${planName}`;
           price.textContent = `Price: ₹${planPrice}`;
           payBtn.setAttribute('href', `upi://pay?pa=gpay-11228156095@okbizaxis&pn=MTB%20OTT&cu=INR&am=${planPrice}`);
@@ -506,6 +679,19 @@
         });
       });
     });
+
+    // Apply discount and dark mode on page load
+    window.onload = () => {
+      const discount = JSON.parse(localStorage.getItem('discount') || '{}');
+      if (discount.type) {
+        document.getElementById('discount-code').value = discount.code || '';
+        applyDiscount();
+      }
+      if (localStorage.getItem('darkMode') === 'true') {
+        document.body.classList.add('dark-mode');
+        document.getElementById('toggle-icon').src = 'https://img.icons8.com/ios-filled/50/sun.png';
+      }
+    };
   </script>
 </body>
 </html>
