@@ -31,6 +31,7 @@
       text-align: center;
       font-size: 20px;
       font-weight: 600;
+      position: relative;
     }
     .container {
       padding: 15px;
@@ -40,7 +41,7 @@
     .ott-card {
       perspective: 1000px;
       margin: 15px 0;
-      height: 280px;
+      height: 320px;
       max-width: 350px;
       width: 100%;
       margin-left: auto;
@@ -100,7 +101,7 @@
     }
     h2 {
       font-size: 18px;
-    font-weight: 600;
+      font-weight: 600;
       margin: 5px 0;
       word-wrap: break-word;
       max-width: 100%;
@@ -108,6 +109,38 @@
     p {
       font-size: 14px;
       margin: 3px 0;
+    }
+    .plan-tabs {
+      display: flex;
+      justify-content: center;
+      margin: 10px 0;
+    }
+    .plan-tab {
+      background-color: #e0e0e0;
+      border: none;
+      padding: 6px 12px;
+      margin: 0 5px;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 13px;
+      transition: background-color 0.3s;
+    }
+    .plan-tab.active {
+      background-color: #28a745;
+      color: white;
+    }
+    .plan-tab:hover {
+      background-color: #d0d0d0;
+    }
+    .dark-mode .plan-tab {
+      background-color: #333;
+      color: #f4f4f4;
+    }
+    .dark-mode .plan-tab.active {
+      background-color: #28a745;
+    }
+    .dark-mode .plan-tab:hover {
+      background-color: #444;
     }
     .pay-btn {
       background-color: #28a745;
@@ -159,7 +192,18 @@
       top: 15px;
       right: 15px;
       cursor: pointer;
-      width: 24px;
+      width: 28px;
+      height: 28px;
+      padding: 4px;
+      border-radius: 50%;
+      transition: background-color 0.3s, transform 0.3s;
+    }
+    .dark-toggle:hover {
+      background-color: rgba(255,255,255,0.1);
+      transform: scale(1.1);
+    }
+    .dark-mode .dark-toggle:hover {
+      background-color: rgba(255,255,255,0.2);
     }
     footer {
       text-align: center;
@@ -192,7 +236,7 @@
     }
     @media (max-width: 480px) {
       .ott-card {
-        height: 260px;
+        height: 300px;
       }
       .ott-logo {
         max-width: 80px;
@@ -213,138 +257,177 @@
         font-size: 12px;
         padding: 6px 12px;
       }
+      .plan-tab {
+        padding: 5px 10px;
+        font-size: 12px;
+      }
     }
   </style>
 </head>
 <body>
   <header>
     MTB OTT - Affordable Subscriptions
-    <img id="toggle-icon" src="https://img.icons8.com/ios-filled/50/moon-symbol.png" class="dark-toggle" width="24" onclick="toggleDarkMode()" title="Toggle Dark Mode" aria-label="Toggle Dark Mode" role="button" />
+    <img id="toggle-icon" src="https://img.icons8.com/ios-filled/50/moon-symbol.png" class="dark-toggle" width="28" onclick="toggleDarkMode()" title="Toggle Dark Mode" aria-label="Toggle Dark Mode" role="button" />
   </header>
   <div class="container">
     <!-- Netflix -->
-    <div class="ott-card">
+    <div class="ott-card" data-plans='{"3m":165,"6m":299,"1y":499}'>
       <div class="card-inner">
         <div class="card-front">
           <img src="https://upload.wikimedia.org/wikipedia/commons/0/08/Netflix_2015_logo.svg" class="ott-logo" alt="Netflix Logo" loading="lazy" />
           <h2>Netflix 4K</h2>
-          <p>Validity: 1 Year</p>
-          <p>Price: ₹499</p>
+          <div class="plan-tabs" role="tablist">
+            <button class="plan-tab" data-plan="3m" role="tab" aria-selected="false">3 Months</button>
+            <button class="plan-tab" data-plan="6m" role="tab" aria-selected="false">6 Months</button>
+            <button class="plan-tab active" data-plan="1y" role="tab" aria-selected="true">1 Year</button>
+          </div>
+          <p class="plan-validity">Validity: 1 Year</p>
+          <p class="plan-price">Price: ₹499</p>
           <a class="pay-btn" href="upi://pay?pa=gpay-11228156095@okbizaxis&pn=MTB%20OTT&cu=INR&am=499">Pay Now</a>
           <div class="note">After payment, send screenshot on WhatsApp.</div>
           <img src="https://img.icons8.com/ios-filled/50/hand-right.png" class="hand-icon" alt="Tap to view QR Code" />
         </div>
         <div class="card-back">
-          <img src="https://api.qrserver.com/v1/create-qr-code/?size=120x120&data=upi%3A%2F%2Fpay%3Fpa%3Dgpay-11228156095%40okbizaxis%26pn%3DMTB%20OTT%26cu%3DINR%26am%3D499" class="qr-code" alt="Netflix UPI QR Code" loading="lazy" />
-          <p>Scan to Pay ₹499</p>
+          <img class="qr-code" src="https://api.qrserver.com/v1/create-qr-code/?size=120x120&data=upi%3A%2F%2Fpay%3Fpa%3Dgpay-11228156095%40okbizaxis%26pn%3DMTB%20OTT%26cu%3DINR%26am%3D499" alt="Netflix UPI QR Code" loading="lazy" />
+          <p class="qr-text">Scan to Pay ₹499</p>
         </div>
       </div>
     </div>
     <!-- Prime Video -->
-    <div class="ott-card">
+    <div class="ott-card" data-plans='{"3m":110,"6m":199,"1y":349}'>
       <div class="card-inner">
         <div class="card-front">
           <img src="https://upload.wikimedia.org/wikipedia/commons/f/f1/Prime_Video.png" class="ott-logo" alt="Prime Video Logo" loading="lazy" />
           <h2>Prime Video</h2>
-          <p>Validity: 6 Months</p>
-          <p>Price: ₹199</p>
-          <a class="pay-btn" href="upi://pay?pa=gpay-11228156095@okbizaxis&pn=MTB%20OTT&cu=INR&am=199">Pay Now</a>
-          <div class="note">After payment, send screenshot on WhatsApp.</div>
-          <img src="https://img.icons8.com/ios-filled/50/hand-right.png" class="hand-icon" alt="Tap to view QR Code" />
-        </div>
-        <div class="card-back">
-          <img src="https://api.qrserver.com/v1/create-qr-code/?size=120x120&data=upi%3A%2F%2Fpay%3Fpa%3Dgpay-11228156095%40okbizaxis%26pn%3DMTB%20OTT%26cu%3DINR%26am%3D199" class="qr-code" alt="Prime Video UPI QR Code" loading="lazy" />
-          <p>Scan to Pay ₹199</p>
-        </div>
-      </div>
-    </div>
-    <!-- JioHotstar -->
-    <div class="ott-card">
-      <div class="card-inner">
-        <div class="card-front">
-          <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSN6oMyTk1I9MQHw637eQLkFeBzP7XwAz-h8zwC2QMmh37sugi0ws5r4iU&s=10" class="ott-logo" alt="Disney+ Hotstar Logo" loading="lazy" />
-          <h2>JioHotstar</h2>
-          <p>Validity: 1 Year</p>
-          <p>Price: ₹349</p>
+          <div class="plan-tabs" role="tablist">
+            <button class="plan-tab" data-plan="3m" role="tab" aria-selected="false">3 Months</button>
+            <button class="plan-tab" data-plan="6m" role="tab" aria-selected="false">6 Months</button>
+            <button class="plan-tab active" data-plan="1y" role="tab" aria-selected="true">1 Year</button>
+          </div>
+          <p class="plan-validity">Validity: 1 Year</p>
+          <p class="plan-price">Price: ₹349</p>
           <a class="pay-btn" href="upi://pay?pa=gpay-11228156095@okbizaxis&pn=MTB%20OTT&cu=INR&am=349">Pay Now</a>
           <div class="note">After payment, send screenshot on WhatsApp.</div>
           <img src="https://img.icons8.com/ios-filled/50/hand-right.png" class="hand-icon" alt="Tap to view QR Code" />
         </div>
         <div class="card-back">
-          <img src="https://api.qrserver.com/v1/create-qr-code/?size=120x120&data=upi%3A%2F%2Fpay%3Fpa%3Dgpay-11228156095%40okbizaxis%26pn%3DMTB%20OTT%26cu%3DINR%26am%3D349" class="qr-code" alt="JioHotstar UPI QR Code" loading="lazy" />
-          <p>Scan to Pay ₹349</p>
+          <img class="qr-code" src="https://api.qrserver.com/v1/create-qr-code/?size=120x120&data=upi%3A%2F%2Fpay%3Fpa%3Dgpay-11228156095%40okbizaxis%26pn%3DMTB%20OTT%26cu%3DINR%26am%3D349" alt="Prime Video UPI QR Code" loading="lazy" />
+          <p class="qr-text">Scan to Pay ₹349</p>
+        </div>
+      </div>
+    </div>
+    <!-- JioHotstar -->
+    <div class="ott-card" data-plans='{"3m":100,"6m":185,"1y":349}'>
+      <div class="card-inner">
+        <div class="card-front">
+          <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSN6oMyTk1I9MQHw637eQLkFeBzP7XwAz-h8zwC2QMmh37sugi0ws5r4iU&s=10" class="ott-logo" alt="Disney+ Hotstar Logo" loading="lazy" />
+          <h2>JioHotstar</h2>
+          <div class="plan-tabs" role="tablist">
+            <button class="plan-tab" data-plan="3m" role="tab" aria-selected="false">3 Months</button>
+            <button class="plan-tab" data-plan="6m" role="tab" aria-selected="false">6 Months</button>
+            <button class="plan-tab active" data-plan="1y" role="tab" aria-selected="true">1 Year</button>
+          </div>
+          <p class="plan-validity">Validity: 1 Year</p>
+          <p class="plan-price">Price: ₹349</p>
+          <a class="pay-btn" href="upi://pay?pa=gpay-11228156095@okbizaxis&pn=MTB%20OTT&cu=INR&am=349">Pay Now</a>
+          <div class="note">After payment, send screenshot on WhatsApp.</div>
+          <img src="https://img.icons8.com/ios-filled/50/hand-right.png" class="hand-icon" alt="Tap to view QR Code" />
+        </div>
+        <div class="card-back">
+          <img class="qr-code" src="https://api.qrserver.com/v1/create-qr-code/?size=120x120&data=upi%3A%2F%2Fpay%3Fpa%3Dgpay-11228156095%40okbizaxis%26pn%3DMTB%20OTT%26cu%3DINR%26am%3D349" alt="JioHotstar UPI QR Code" loading="lazy" />
+          <p class="qr-text">Scan to Pay ₹349</p>
         </div>
       </div>
     </div>
     <!-- Zee5 -->
-    <div class="ott-card">
+    <div class="ott-card" data-plans='{"3m":99,"6m":175,"1y":299}'>
       <div class="card-inner">
         <div class="card-front">
           <img src="https://1000logos.net/wp-content/uploads/2022/01/Zee5-Logo.png" class="ott-logo" alt="Zee5 Logo" loading="lazy" />
           <h2>Zee5</h2>
-          <p>Validity: 1 Year</p>
-          <p>Price: ₹299</p>
+          <div class="plan-tabs" role="tablist">
+            <button class="plan-tab" data-plan="3m" role="tab" aria-selected="false">3 Months</button>
+            <button class="plan-tab" data-plan="6m" role="tab" aria-selected="false">6 Months</button>
+            <button class="plan-tab active" data-plan="1y" role="tab" aria-selected="true">1 Year</button>
+          </div>
+          <p class="plan-validity">Validity: 1 Year</p>
+          <p class="plan-price">Price: ₹299</p>
           <a class="pay-btn" href="upi://pay?pa=gpay-11228156095@okbizaxis&pn=MTB%20OTT&cu=INR&am=299">Pay Now</a>
           <div class="note">After payment, send screenshot on WhatsApp.</div>
           <img src="https://img.icons8.com/ios-filled/50/hand-right.png" class="hand-icon" alt="Tap to view QR Code" />
         </div>
         <div class="card-back">
-          <img src="https://api.qrserver.com/v1/create-qr-code/?size=120x120&data=upi%3A%2F%2Fpay%3Fpa%3Dgpay-11228156095%40okbizaxis%26pn%3DMTB%20OTT%26cu%3DINR%26am%3D299" class="qr-code" alt="Zee5 UPI QR Code" loading="lazy" />
-          <p>Scan to Pay ₹299</p>
+          <img class="qr-code" src="https://api.qrserver.com/v1/create-qr-code/?size=120x120&data=upi%3A%2F%2Fpay%3Fpa%3Dgpay-11228156095%40okbizaxis%26pn%3DMTB%20OTT%26cu%3DINR%26am%3D299" alt="Zee5 UPI QR Code" loading="lazy" />
+          <p class="qr-text">Scan to Pay ₹299</p>
         </div>
       </div>
     </div>
     <!-- SonyLIV -->
-    <div class="ott-card">
+    <div class="ott-card" data-plans='{"3m":99,"6m":175,"1y":299}'>
       <div class="card-inner">
         <div class="card-front">
           <img src="https://x.imastudent.com/content/0059513_sonyliv_500.png" class="ott-logo" alt="SonyLIV Logo" loading="lazy" />
           <h2>SonyLIV</h2>
-          <p>Validity: 1 Year</p>
-          <p>Price: ₹299</p>
+          <div class="plan-tabs" role="tablist">
+            <button class="plan-tab" data-plan="3m" role="tab" aria-selected="false">3 Months</button>
+            <button class="plan-tab" data-plan="6m" role="tab" aria-selected="false">6 Months</button>
+            <button class="plan-tab active" data-plan="1y" role="tab" aria-selected="true">1 Year</button>
+          </div>
+          <p class="plan-validity">Validity: 1 Year</p>
+          <p class="plan-price">Price: ₹299</p>
           <a class="pay-btn" href="upi://pay?pa=gpay-11228156095@okbizaxis&pn=MTB%20OTT&cu=INR&am=299">Pay Now</a>
           <div class="note">After payment, send screenshot on WhatsApp.</div>
           <img src="https://img.icons8.com/ios-filled/50/hand-right.png" class="hand-icon" alt="Tap to view QR Code" />
         </div>
         <div class="card-back">
-          <img src="https://api.qrserver.com/v1/create-qr-code/?size=120x120&data=upi%3A%2F%2Fpay%3Fpa%3Dgpay-11228156095%40okbizaxis%26pn%3DMTB%20OTT%26cu%3DINR%26am%3D299" class="qr-code" alt="SonyLIV UPI QR Code" loading="lazy" />
-          <p>Scan to Pay ₹299</p>
+          <img class="qr-code" src="https://api.qrserver.com/v1/create-qr-code/?size=120x120&data=upi%3A%2F%2Fpay%3Fpa%3Dgpay-11228156095%40okbizaxis%26pn%3DMTB%20OTT%26cu%3DINR%26am%3D299" alt="SonyLIV UPI QR Code" loading="lazy" />
+          <p class="qr-text">Scan to Pay ₹299</p>
         </div>
       </div>
     </div>
     <!-- Hoichoi -->
-    <div class="ott-card">
+    <div class="ott-card" data-plans='{"3m":99,"6m":175,"1y":299}'>
       <div class="card-inner">
         <div class="card-front">
           <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/b0/Hoichoi-720p-transperant.png/1200px-Hoichoi-720p-transperant.png" class="ott-logo" alt="Hoichoi Logo" loading="lazy" />
           <h2>Hoichoi</h2>
-          <p>Validity: 1 Year</p>
-          <p>Price: ₹299</p>
+          <div class="plan-tabs" role="tablist">
+            <button class="plan-tab" data-plan="3m" role="tab" aria-selected="false">3 Months</button>
+            <button class="plan-tab" data-plan="6m" role="tab" aria-selected="false">6 Months</button>
+            <button class="plan-tab active" data-plan="1y" role="tab" aria-selected="true">1 Year</button>
+          </div>
+          <p class="plan-validity">Validity: 1 Year</p>
+          <p class="plan-price">Price: ₹299</p>
           <a class="pay-btn" href="upi://pay?pa=gpay-11228156095@okbizaxis&pn=MTB%20OTT&cu=INR&am=299">Pay Now</a>
           <div class="note">After payment, send screenshot on WhatsApp.</div>
           <img src="https://img.icons8.com/ios-filled/50/hand-right.png" class="hand-icon" alt="Tap to view QR Code" />
         </div>
         <div class="card-back">
-          <img src="https://api.qrserver.com/v1/create-qr-code/?size=120x120&data=upi%3A%2F%2Fpay%3Fpa%3Dgpay-11228156095%40okbizaxis%26pn%3DMTB%20OTT%26cu%3DINR%26am%3D299" class="qr-code" alt="Hoichoi UPI QR Code" loading="lazy" />
-          <p>Scan to Pay ₹299</p>
+          <img class="qr-code" src="https://api.qrserver.com/v1/create-qr-code/?size=120x120&data=upi%3A%2F%2Fpay%3Fpa%3Dgpay-11228156095%40okbizaxis%26pn%3DMTB%20OTT%26cu%3DINR%26am%3D299" alt="Hoichoi UPI QR Code" loading="lazy" />
+          <p class="qr-text">Scan to Pay ₹299</p>
         </div>
       </div>
     </div>
     <!-- Discovery+ -->
-    <div class="ott-card">
+    <div class="ott-card" data-plans='{"3m":99,"6m":175,"1y":299}'>
       <div class="card-inner">
         <div class="card-front">
           <img src="https://upload.wikimedia.org/wikipedia/commons/d/df/Discovery%2B.png" class="ott-logo" alt="Discovery+ Logo" loading="lazy" />
           <h2>Discovery+</h2>
-          <p>Validity: 1 Year</p>
-          <p>Price: ₹299</p>
+          <div class="plan-tabs" role="tablist">
+            <button class="plan-tab" data-plan="3m" role="tab" aria-selected="false">3 Months</button>
+            <button class="plan-tab" data-plan="6m" role="tab" aria-selected="false">6 Months</button>
+            <button class="plan-tab active" data-plan="1y" role="tab" aria-selected="true">1 Year</button>
+          </div>
+          <p class="plan-validity">Validity: 1 Year</p>
+          <p class="plan-price">Price: ₹299</p>
           <a class="pay-btn" href="upi://pay?pa=gpay-11228156095@okbizaxis&pn=MTB%20OTT&cu=INR&am=299">Pay Now</a>
           <div class="note">After payment, send screenshot on WhatsApp.</div>
           <img src="https://img.icons8.com/ios-filled/50/hand-right.png" class="hand-icon" alt="Tap to view QR Code" />
         </div>
         <div class="card-back">
-          <img src="https://api.qrserver.com/v1/create-qr-code/?size=120x120&data=upi%3A%2F%2Fpay%3Fpa%3Dgpay-11228156095%40okbizaxis%26pn%3DMTB%20OTT%26cu%3DINR%26am%3D299" class="qr-code" alt="Discovery+ UPI QR Code" loading="lazy" />
-          <p>Scan to Pay ₹299</p>
+          <img class="qr-code" src="https://api.qrserver.com/v1/create-qr-code/?size=120x120&data=upi%3A%2F%2Fpay%3Fpa%3Dgpay-11228156095%40okbizaxis%26pn%3DMTB%20OTT%26cu%3DINR%26am%3D299" alt="Discovery+ UPI QR Code" loading="lazy" />
+          <p class="qr-text">Scan to Pay ₹299</p>
         </div>
       </div>
     </div>
@@ -367,8 +450,42 @@
 
     // Toggle flip on click/tap for mobile
     document.querySelectorAll('.ott-card').forEach(card => {
-      card.addEventListener('click', () => {
-        card.classList.toggle('tapped');
+      card.addEventListener('click', (e) => {
+        if (!e.target.classList.contains('plan-tab')) {
+          card.classList.toggle('tapped');
+        }
+      });
+    });
+
+    // Handle plan selection
+    document.querySelectorAll('.ott-card').forEach(card => {
+      const plans = JSON.parse(card.getAttribute('data-plans'));
+      const tabs = card.querySelectorAll('.plan-tab');
+      const validity = card.querySelector('.plan-validity');
+      const price = card.querySelector('.plan-price');
+      const payBtn = card.querySelector('.pay-btn');
+      const qrCode = card.querySelector('.qr-code');
+      const qrText = card.querySelector('.qr-text');
+      tabs.forEach(tab => {
+        tab.addEventListener('click', () => {
+          // Update active tab
+          tabs.forEach(t => {
+            t.classList.remove('active');
+            t.setAttribute('aria-selected', 'false');
+          });
+          tab.classList.add('active');
+          tab.setAttribute('aria-selected', 'true');
+
+          // Update card content
+          const plan = tab.getAttribute('data-plan');
+          const planName = plan === '3m' ? '3 Months' : plan === '6m' ? '6 Months' : '1 Year';
+          const planPrice = plans[plan];
+          validity.textContent = `Validity: ${planName}`;
+          price.textContent = `Price: ₹${planPrice}`;
+          payBtn.setAttribute('href', `upi://pay?pa=gpay-11228156095@okbizaxis&pn=MTB%20OTT&cu=INR&am=${planPrice}`);
+          qrCode.setAttribute('src', `https://api.qrserver.com/v1/create-qr-code/?size=120x120&data=upi%3A%2F%2Fpay%3Fpa%3Dgpay-11228156095%40okbizaxis%26pn%3DMTB%20OTT%26cu%3DINR%26am%3D${planPrice}`);
+          qrText.textContent = `Scan to Pay ₹${planPrice}`;
+        });
       });
     });
   </script>
