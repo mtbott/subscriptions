@@ -445,7 +445,7 @@
     <div class="ott-card" data-plans='{"3m":99,"6m":175,"1y":299}' tabindex="0">
       <div class="card-inner">
         <div class="card-front">
-          <img src="https://1000logos.net/wp-content/uploads/2022/01/Zee5-Logo.png" class="ott-logo" alt="Zee5 Logo" loading="lazy" />
+          <img src="https://images.seeklogo.com/logo-png/48/2/zee5-logo-png_seeklogo-482941.png" class="ott-logo" alt="Zee5 Logo" loading="lazy" />
           <h2>Zee5</h2>
           <div class="plan-tabs" role="tablist">
             <button class="plan-tab" data-plan="3m" role="tab" aria-selected="false">3 Months</button>
@@ -704,5 +704,53 @@
       }
     };
   </script>
+  
+  <!-- WhatsApp Floating Button with Pulse -->
+<style>
+  .whatsapp-float {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    z-index: 999;
+  }
+
+  .whatsapp-float a {
+    display: inline-block;
+    background-color: #25D366;
+    padding: 14px;
+    border-radius: 50%;
+    box-shadow: 0 0 0 rgba(37, 211, 102, 0.4);
+    animation: pulse 2s infinite;
+    transition: transform 0.3s ease;
+  }
+
+  .whatsapp-float a:hover {
+    transform: scale(1.1);
+  }
+
+  .whatsapp-float img {
+    width: 26px;
+    height: 26px;
+  }
+
+  @keyframes pulse {
+    0% {
+      box-shadow: 0 0 0 0 rgba(37, 211, 102, 0.7);
+    }
+    70% {
+      box-shadow: 0 0 0 15px rgba(37, 211, 102, 0);
+    }
+    100% {
+      box-shadow: 0 0 0 0 rgba(37, 211, 102, 0);
+    }
+  }
+</style>
+
+<div class="whatsapp-float">
+  <a href="https://wa.me/9091544508" target="_blank">
+    <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" alt="WhatsApp">
+  </a>
+</div>
+
 </body>
 </html>
