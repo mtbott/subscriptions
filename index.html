@@ -728,13 +728,19 @@
     };
   </script>
   
-  <!-- WhatsApp Floating Button with Pulse -->
+  <!-- WhatsApp Floating Button with Bottom Detect -->
 <style>
   .whatsapp-float {
     position: fixed;
     bottom: 20px;
     right: 20px;
     z-index: 999;
+    transition: opacity 0.4s ease;
+  }
+
+  .whatsapp-float.hide {
+    opacity: 0;
+    pointer-events: none;
   }
 
   .whatsapp-float a {
@@ -769,11 +775,31 @@
   }
 </style>
 
-<div class="whatsapp-float">
+<!-- WhatsApp Button -->
+<div class="whatsapp-float" id="whatsappButton">
   <a href="https://wa.me/9091544508" target="_blank">
     <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" alt="WhatsApp">
   </a>
 </div>
+
+<!-- Script: Only hide when bottom is fully visible -->
+<script>
+  const whatsappBtn = document.getElementById("whatsappButton");
+
+  window.addEventListener("scroll", () => {
+    const scrollY = window.scrollY || document.documentElement.scrollTop;
+    const windowHeight = window.innerHeight;
+    const fullHeight = document.documentElement.scrollHeight;
+
+    if (scrollY + windowHeight >= fullHeight - 5) {
+      // Reached bottom
+      whatsappBtn.classList.add("hide");
+    } else {
+      // Not at bottom
+      whatsappBtn.classList.remove("hide");
+    }
+  });
+</script>
 
 </body>
 </html>
