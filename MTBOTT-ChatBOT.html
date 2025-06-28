@@ -229,7 +229,7 @@ function showQR(price) {
 
 function upiPay(price) {
   const amount = price.replace(/[^\d]/g, '');
-  const upi = `upi://pay?pa=oksdcb@ybl&pn=MTB+OTT&am=${amount}&cu=INR`;
+  const upi = `upi://pay?pa=gpay-11228156095@okbizaxis&pn=MTB+OTT&am=${amount}&cu=INR`;
   window.location.href = upi;
 
   setTimeout(() => {
