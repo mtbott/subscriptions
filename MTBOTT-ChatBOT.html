@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>MTB OTT ChatBot</title>
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background: #0d0d0d;
+      color: #fff;
+      display: flex;
+      flex-direction: column;
+      height: 100vh;
+      overflow: hidden;
+    }
+    header {
+      background: #1a0000;
+      padding: 15px;
+      text-align: center;
+      font-size: 24px;
+      font-weight: bold;
+      color: #ff2e63;
+      box-shadow: 0 2px 5px rgba(255, 0, 0, 0.4);
+      animation: fadeIn 1s ease-out;
+    }
+    #chat {
+      flex: 1;
+      overflow-y: auto;
+      padding: 12px;
+      padding-bottom: 120px; /* ✅ Fix: extra space for input bar */
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      scroll-behavior: smooth;
+      animation: slideUp 1s ease-in-out;
+    }
+    .msg {
+      padding: 12px;
+      border-radius: 12px;
+      max-width: 85%;
+      line-height: 1.4;
+      white-space: pre-wrap;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.4);
+    }
+    .user {
+      align-self: flex-end;
+      background: #2e2e2e;
+    }
+    .bot {
+      align-self: flex-start;
+      background: #5a0000;
+    }
+    .button {
+      background: #ff2e63;
+      color: #fff;
+      border: none;
+      padding: 8px 14px;
+      margin: 6px 6px 0 0;
+      border-radius: 6px;
+      cursor: pointer;
+      font-weight: 500;
+      box-shadow: 0 2px 5px rgba(255,0,0,0.3);
+      display: inline-block;
+      transition: transform 0.2s ease;
+    }
+    .button:hover {
+      transform: scale(1.05);
+    }
+    footer {
+      display: flex;
+      padding: 10px;
+      border-top: 1px solid #660000;
+      background: #1a0000;
+      position: sticky;
+      bottom: 0;
+    }
+    input {
+      flex: 1;
+      padding: 10px;
+      font-size: 16px;
+      border: none;
+      outline: none;
+      background: #2b2b2b;
+      color: white;
+      border-radius: 6px 0 0 6px;
+    }
+    button.send {
+      padding: 10px 20px;
+      background: #ff2e63;
+      border: none;
+      color: #fff;
+      font-weight: bold;
+      border-radius: 0 6px 6px 0;
+      cursor: pointer;
+    }
+    #qr {
+      max-width: 220px;
+      display: block;
+      margin-top: 10px;
+      border-radius: 10px;
+    }
+    @keyframes fadeIn {
+      from {opacity: 0; transform: translateY(-20px);}
+      to {opacity: 1; transform: translateY(0);}
+    }
+    @keyframes slideUp {
+      from {opacity: 0; transform: translateY(30px);}
+      to {opacity: 1; transform: translateY(0);}
+    }
+  </style>
+</head>
+<body>
+
+<header>🎬 MTB OTT Assistant</header>
+
+<div id="chat"></div>
+
+<footer>
+  <input
+  type="text"
+  id="q"
+  placeholder="Type Netflix, Prime, etc..."
+  autocomplete="off"
+  autocorrect="off"
+  autocapitalize="off"
+  spellcheck="false"
+/>
+  <button class="send" onclick="ask()">Send</button>
+</footer>
+
+<script>
+document.getElementById("q").addEventListener("keypress", function(e) {
+  if (e.key === "Enter") {
+    ask();
+  }
+});
+const chat = document.getElementById("chat");
+
+function addMsg(text, sender) {
+  const msg = document.createElement("div");
+  msg.className = "msg " + sender;
+  msg.innerHTML = text;
+  chat.appendChild(msg);
+  chat.scrollTop = chat.scrollHeight;
+}
+
+function ask() {
+  const input = document.getElementById("q");
+  const txt = input.value.trim().toLowerCase();
+  if (!txt) return;
+  addMsg(txt, 'user');
+  input.value = '';
+
+  if (txt.includes("netflix")) {
+    showPlans("Netflix", [
+      { label: "3 Months", price: "₹165" },
+      { label: "6 Months", price: "₹299" },
+      { label: "1 Year", price: "₹499" }
+    ]);
+  } else if (txt.includes("prime")) {
+    showPlans("Prime Video", [
+      { label: "3 Months", price: "₹110" },
+      { label: "6 Months", price: "₹199" },
+      { label: "1 Year", price: "₹349" }
+    ]);
+  } else if (txt.includes("hotstar") || txt.includes("jiohotstar")) {
+    showPlans("JioHotstar", [
+      { label: "3 Months", price: "₹100" },
+      { label: "6 Months", price: "₹185" },
+      { label: "1 Year", price: "₹349" }
+    ]);
+  } else if (txt.includes("crunchyroll")) {
+    showPlans("Crunchyroll", [
+      { label: "1 Month", price: "₹35" },
+      { label: "3 Months", price: "₹85" },
+      { label: "6 Months", price: "₹149" },
+      { label: "1 Year", price: "₹289" }
+    ]);
+  } else if (txt.includes("zee5") || txt.includes("sonyliv") || txt.includes("discovery") || txt.includes("hoichoi")) {
+    showPlans("Selected OTT", [
+      { label: "3 Months", price: "₹99" },
+      { label: "6 Months", price: "₹175" },
+      { label: "1 Year", price: "₹299" }
+    ]);
+  } else {
+    setTimeout(() => {
+      addMsg(`⚠️You can type the OTT name to start, Or Select from here:<br>
+<div style="display: flex; flex-wrap: wrap; gap: 8px;">
+  <button class='button' onclick="simulateText('Netflix')">Netflix</button>
+  <button class='button' onclick="simulateText('Prime')">Prime Video</button>
+  <button class='button' onclick="simulateText('JioHotstar')">JioHotstar</button>
+  <button class='button' onclick="simulateText('SonyLIV')">SonyLIV</button>
+  <button class='button' onclick="simulateText('Zee5')">Zee5</button>
+  <button class='button' onclick="simulateText('Discovery+')">Discovery+</button>
+  <button class='button' onclick="simulateText('Hoichoi')">Hoichoi</button>
+  <button class='button' onclick="simulateText('Crunchyroll')">Crunchyroll</button>
+</div>`, 'bot');
+    }, 500);
+  }
+}
+
+function showPayment(price) {
+  addMsg(`✅ You agreed.<br>Choose your payment method: <br>
+    <div style="display: flex; flex-wrap: wrap; gap: 10px;">
+      <button class="button" onclick="showQR('${price}')">Scan QR</button>
+      <button class="button" onclick="upiPay('${price}')">Pay via UPI Apps</button>
+    </div>`, 'bot');
+}
+
+function showQR(price) {
+  const amount = price.replace(/[^\d]/g, '');
+  const upiLink = `upi://pay?pa=oksdcb@ybl&pn=MTB+OTT&am=${amount}&cu=INR`;
+  const qrImage = `https://api.qrserver.com/v1/create-qr-code/?data=${encodeURIComponent(upiLink)}&size=200x200`;
+
+  addMsg(`📷 Scan this QR to pay:<br><img id="qr" src="${qrImage}" alt="QR Code">`, 'bot');
+
+  setTimeout(() => {
+    addMsg(`✅ After payment, please send a screenshot:<br>
+      <a href="https://wa.me/919091544508" target="_blank">
+        <button class="button">📲 WhatsApp: 9091544508</button>
+      </a>`, 'bot');
+  }, 1000);
+}
+
+function upiPay(price) {
+  const amount = price.replace(/[^\d]/g, '');
+  const upi = `upi://pay?pa=oksdcb@ybl&pn=MTB+OTT&am=${amount}&cu=INR`;
+  window.location.href = upi;
+
+  setTimeout(() => {
+    addMsg(`✅ After payment, please send a screenshot:<br>
+      <a href="https://wa.me/919091544508" target="_blank">
+        <button class="button">📲 WhatsApp: 9091544508</button>
+      </a>`, 'bot');
+  }, 2000);
+}
+
+function simulateText(txt) {
+  document.getElementById('q').value = txt;
+  ask();
+}
+
+function showPlans(service, plans) {
+  let buttons = plans.map(p => 
+    `<button class="button" onclick="selectPlanCustom('${service}', '${p.label}', '${p.price}')">${p.label}</button>`
+  ).join("");
+  addMsg(`📺 ${service} Plans:<br><div style="display: flex; flex-wrap: wrap; gap: 10px;">${buttons}</div>`, 'bot');
+}
+
+function selectPlanCustom(service, label, price) {
+  addMsg(`✅ Selected: ${service} - ${label}<br>💰 Price: <strong>${price}</strong>`, 'bot');
+  setTimeout(() => {
+    addMsg(`📜 Terms & Conditions:
+    <ul style="margin: 4px 0; padding-left: 18px; line-height: 1.1; list-style-position: inside;">
+      <li>✔ Subscriptions are shared with secure locked private profiles.</li>
+      <li>✔ You must not change anything or log in on more than 1 device.</li>
+      <li>✔ Any misuse will result in instant ban with no refund.</li>
+      <li>✔ Screenshots of payment must be shared for verification.</li>
+      <li>✔ Customer agrees to these terms before payment.</li>
+      <li>✔ 100% Refund/Replacements.</li>
+      <li>✔ 24x7 WhatsApp customer support.</li>
+      <li>✔ Delivery within 20 mins after confirmation.</li>
+⚠️ We collect customer information & data only for service purposes and do not share it. And we are not responsible for service interruptions or policy changes by third parties.
+    </ul>
+    <button class="button" onclick="showPayment('${price}')">I Agree</button>`, 'bot');
+  }, 800);
+}
+</script>
+
+</body>
+</html>
