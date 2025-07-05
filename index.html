@@ -843,5 +843,86 @@
   });
 </script>
 
+
+
+  
+
+<!-- Refer & Earn Button (Bottom-Left Corner) -->
+<div id="referButton">
+  <div onclick="toggleShareOptions()" title="Refer & Earn">
+    🎁
+    <div style="font-size: 12px;">Refer</div>
+  </div>
+  <div id="shareOptions">
+    <a href="https://wa.me/?text=Get%20Netflix%2C%20Hotstar%20%2B%20Jio%20plans%20at%20lowest%20price%21%20Trusted%20site%3A%20https%3A%2F%2Fmtbott.github.io%2Fsubscriptions%2F" target="_blank">WhatsApp</a>
+    <a href="https://www.facebook.com/sharer/sharer.php?u=https://mtbott.github.io/subscriptions/" target="_blank">Facebook</a>
+    <a href="https://t.me/share/url?url=https://mtbott.github.io/subscriptions/&text=Best%20OTT%20plans%20under%20500%21" target="_blank">Telegram</a>
+    <a href="https://twitter.com/intent/tweet?text=Get%20OTT%20subscriptions%20at%20low%20price%20🔥%20https%3A%2F%2Fmtbott.github.io%2Fsubscriptions%2F" target="_blank">Twitter</a>
+    <a href="#" onclick="alert('📸 Please take a screenshot and share it on your Instagram Story. Attach MTB OTT link to claim rewards!'); return false;">Instagram</a>
+  </div>
+</div>
+
+<style>
+  #referButton {
+    position: fixed;
+    bottom: 15px;
+    left: 15px;
+    text-align: center;
+    z-index: 9999;
+  }
+
+  #referButton > div:first-child {
+    background: #ffcc00;
+    color: #000;
+    padding: 10px;
+    border-radius: 50%;
+    font-size: 24px;
+    cursor: pointer;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+    width: 50px;
+    height: 50px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+
+  #referButton #shareOptions {
+    display: none;
+    margin-top: 10px;
+    background: white;
+    border-radius: 10px;
+    padding: 10px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+  }
+
+  #referButton #shareOptions a {
+    display: block;
+    padding: 5px;
+    text-decoration: none;
+    font-size: 14px;
+    color: #333;
+    border-bottom: 1px solid #ddd;
+  }
+
+  #referButton #shareOptions a:last-child {
+    border-bottom: none;
+  }
+
+  #referButton #shareOptions a:hover {
+    background: #f0f0f0;
+  }
+</style>
+
+<script>
+  function toggleShareOptions() {
+    const options = document.getElementById('shareOptions');
+    options.style.display = options.style.display === 'block' ? 'none' : 'block';
+  }
+</script>
+
+
+
+  
 </body>
 </html>
